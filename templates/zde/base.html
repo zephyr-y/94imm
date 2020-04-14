@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="cache-control" content="no-siteapp">
+    <title>{% block title %} - {% endblock title %} </title>
+    <link rel='dns-prefetch' href='//s.w.org'/>
+    <link rel='stylesheet' id='main-css' href="/static/zde/css/style.css" type='text/css' media='all'/>
+    <script type='text/javascript' src="/static/zde/js/jquery.js"></script>
+    <meta name="keywords" content="{% block keywords %}{% endblock keywords %} ">
+    <meta name="description" content="{% block description %}{% endblock description %}">
+    <style type="text/css">.recentcomments a {
+        display: inline !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }</style>
+    <link rel="icon" href="/static/favicon.ico"/>
+    <!--[if lt IE 9]>
+    <script src="/static/zde/js/html5.js"></script><![endif]-->
+</head>
+<body class="home blog list-thumb-hover-action">
+<header class="header">
+    <div class="container">
+        <h1 class="logo"><a href="/" title="{{ siteName }}"><img src="/static/logo.png"><span>{{ siteName }}</span></a></h1>
+        <div class="sitenav">
+            {% block menu %}{% endblock menu %}
+        </div>
+        <span class="sitenav-on"><i class="fa"></i></span>
+        <span class="sitenav-mask"></span>
+        <span class="searchstart-on"><i class="fa">&#xe600;</i></span>
+        <span class="searchstart-off"><i class="fa">&#xe606;</i></span>
+        <form method="get" class="searchform" action="/search/">
+            <button tabindex="3" class="sbtn" type="submit"><i class="fa">&#xe600;</i></button>
+            <input tabindex="2" class="sinput" name="s" type="text" placeholder="输入关键字" value="">
+        </form>
+    </div>
+</header>
+{% block focusbox %}{% endblock focusbox %}
+{% block section %}{% endblock section %}
+{% block recommend %}{% endblock recommend %}
+<footer class="footer">
+	    &copy; 2020 <a href="/">{{ siteName }}</a><br />
+		<h1>美图分享,每日更新.</h1>
+		POWERED BY <a href="/">{{ siteName }}</a> | THEME BY <a href="https://www.94imm.com">94iMM</a>
+</footer>
+
+{% block js %}{% endblock js %}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92272800-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-92272800-2');
+</script>
+
+<script type='text/javascript' src="/static/zde/js/main.js"></script>
+</body>
+</html>
