@@ -80,6 +80,9 @@ function install_python(){
 # 编译MySQL时间比较长，需要等很长时间
 yum install wget git -y
 git clone https://github.com/Turnright-git/94imm.git
+yum install gcc mariadb-devel -y
+pip3 94imm/install -r requirements.txt
+yum install yum install -y python3-devel
 tmp="tmp"
 mkdir ~/$tmp
 if ! [ -x "$(command -v python3)" ]; then
@@ -113,9 +116,9 @@ else
 	mysql -uroot -p$db_pass -e "${create_db_sql}"
 fi
 cd "94imm"
-mysql -uroot -p$db_pass -e "source/94imm.sql"
 path=$(pwd)
-cat uwsgi.ini<<EOF
+mysql -uroot -p$db_pass -e "source ${path}/94imm.sql"
+cat>"$path/uwsgi.ini"<<EOF
 [uwsgi]
 chdir=$path/
 file=$path/silumz/wsgi.py      
@@ -135,7 +138,7 @@ post-buffering=4096
 daemonize=$path/uwsgi.log
 stats=8001
 EOF
-cat config.py<<EOF
+cat>"$path/config.py"<<EOF
 mysql_config = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': '$db_name'
