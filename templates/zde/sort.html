@@ -48,14 +48,8 @@
             {% for imglist in data %}
                 <article class="excerpt excerpt-c5">
                     <div class="thumbnail">
-                        {#                    <a class="thumbnail" href="{% url 'article' imglist.pid %}">#}
-                        <div class="imgbox" style="background-image:url({{ imglist.firstimg }});">
-
-                            <a href="/type/{{ imglist.type_id }}"> {{ imglist.type }}</a>
-                            <div class="imgbox-click"
-                                 onclick="window.location.href= '{% url 'article' imglist.pid %}';return false"></div>
-                        </div>
-                        {#                    </a>#}
+					<a href="/type/{{ imglist.type_id }}" class="imgbox-a"> {{ imglist.type }}</a>
+                        <div class="imgbox" style="background-image:url({{ imglist.firstimg }})" onclick="window.location.href= '{% url 'article' imglist.pid %}';return false">  
                     </div>
                     <h2><a href="{% url 'article' imglist.pid %}">{{ imglist.title }}</a></h2>
                     <footer>
@@ -63,8 +57,8 @@
                             <img src="/static/zde/hot.png">{{ imglist.hot }}
                         </hot>
                         <a class="post-like">
-                            <time>{{ imglist.sendtime |date:'Y-m-d' }}</time>
-                        </a></footer>
+                            <time>{{ imglist.sendtime |date:'Y-m-d' }}</time></a>
+                    </footer>
                 </article>
             {% endfor %}
         </div>

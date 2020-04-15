@@ -12,6 +12,7 @@
     <link rel='dns-prefetch' href='//s.w.org'/>
     <link rel='stylesheet' id='main-css' href="/static/zde/css/style.css" type='text/css' media='all'/>
     <script type='text/javascript' src="/static/zde/js/jquery.js"></script>
+	<script type='text/javascript' src="/static/zde/js/main.js"></script>
     <meta name="keywords" content="{% block keywords %}{% endblock keywords %} ">
     <meta name="description" content="{% block description %}{% endblock description %}">
     <style type="text/css">.recentcomments a {
@@ -19,6 +20,7 @@
         padding: 0 !important;
         margin: 0 !important;
     }</style>
+	{% block js_head %}{% endblock js_head %}
     <link rel="icon" href="/static/favicon.ico"/>
     <!--[if lt IE 9]>
     <script src="/static/zde/js/html5.js"></script><![endif]-->
@@ -41,29 +43,15 @@
     </div>
 </header>
 {% block focusbox %}{% endblock focusbox %}
-{% block section %}{% endblock section %}
+<section class="container">{% block section %}{% endblock section %}</section>
 {% block recommend %}{% endblock recommend %}
 <footer class="footer">
 	    &copy; 2020 <a href="/">{{ siteName }}</a><br />
 		<h1>美图分享,每日更新.</h1>
-		POWERED BY <a href="/">{{ siteName }}</a> | THEME BY <a href="https://www.94imm.com">94iMM</a>
+		POWERED BY <a href="https://github.com/Turnright-git/94imm.git">94iMM</a> | 本站数据来自网络，如侵害您的权利请联系本站删除相关信息，邮箱：{{ email }}
 </footer>
 
 {% block js %}{% endblock js %}
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-92272800-2"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'UA-92272800-2');
-</script>
-
-<script type='text/javascript' src="/static/zde/js/main.js"></script>
+<!--添加统计代码-->
 </body>
 </html>

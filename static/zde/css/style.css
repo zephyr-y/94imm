@@ -1614,6 +1614,7 @@ body {
 	text-align: center;
 	background-color: #384047;
 	color: #eee;
+	margin-bottom: 15px;
 	padding: 15px 0;
 	-webkit-transition: all .3s ease-in-out;
 	-moz-transition: all .3s ease-in-out;
@@ -1654,7 +1655,8 @@ body {
 
 @media (max-width: 544px) {
 	.focusbox {
-		padding: 18px 0
+		padding: 18px 0;
+		margin-bottom: 10px;
 	}
 
 	.focusbox .focusbox-title {
@@ -2380,7 +2382,7 @@ body {
 }
 
 .article-content p {
-	margin-bottom: 30px
+	margin-bottom: 15px
 }
 
 .article-content pre {
@@ -4283,10 +4285,24 @@ body {
 	box-shadow: 0 0 10px #4E4E4E; 
 }
 
-.imgbox a{
+.imgbox-a{
+	z-index:1;
 	display: inline-block;
     color: #fff;
     background: rgba(255, 118, 99, 0.51);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+.imgbox-a:hover{
+	z-index:1;
+	display: inline-block;
+    color: #fff;
+    background: rgba(255, 118, 99, 0.66);
     padding: 5px;
     border-radius: 5px;
     font-size: 12px;

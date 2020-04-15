@@ -7,7 +7,6 @@ from config import site_name, site_url, key_word, description, email
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
 
 
-# Create your views here.
 
 def index(request):
     if request.method == "GET":
@@ -61,9 +60,6 @@ def page(request, i_id):
                    "email": email})
 
 
-# except:
-#     return HttpResponseRedirect('/')
-
 
 def page_all(request, i_id):
     try:
@@ -73,10 +69,6 @@ def page_all(request, i_id):
         typelist = []
         page_hot = page_arr.hot
         page_arr.hot = page_hot + 1
-        # page_hot = page_arr.hot
-        # page_arr.update(
-        #     hot=page_hot + 1
-        # )
         page_arr.save()
         time = page_arr.sendtime
         typeid = page_arr.typeid
@@ -110,7 +102,6 @@ def page_all(request, i_id):
 
 def tag(request, tid):
     if request.method == "GET":
-        # istagid=Tag.objects.get(tag=tag).id
         imgs = []
         typelist = []
         page_list = Page.objects.all().order_by("-id")
@@ -294,11 +285,10 @@ def getVideo(request):
             break
         except:
             continue
-    url = "https://index.801580.xyz/" + video_info.v_path + "/" + video_info.v_name
+    url = video_info.url
     user_id = video_info.user_id
     source = video_info.source
     return HttpResponse(json.dumps({"url": url, "user_id": user_id, "source": source}))
-    # return HttpResponseRedirect(url)
 
 
 def mVideo(request):
@@ -312,8 +302,7 @@ def mVideo(request):
                 break
             except:
                 continue
-        url = "https://index.801580.xyz/" + video_info.v_path + "/" + video_info.v_name
-        # url="https:"+video_info.url
+        url = "https:"+video_info.url
         return render(request, 'mVideo.html', {
             "url": url,
             "user_id": video_info.user_id,
@@ -335,8 +324,7 @@ def pVideo(request):
                 break
             except:
                 continue
-        url = "https://index.801580.xyz/" + video_info.v_path + "/" + video_info.v_name
-        # url="https:"+video_info.url
+        url="https:"+video_info.url
         return render(request, 'video.html', {
             "url": url,
             "user_id": video_info.user_id,

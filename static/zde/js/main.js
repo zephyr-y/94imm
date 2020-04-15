@@ -348,12 +348,7 @@ $(document).ready(function(){
         threshold: 400
     });
 	    
-	$('img.alignnone').lazyload({
-        data_attribute: 'original',
-        threshold: 200,
-		effect: "fadeIn",
-		placeholder : '/static/zde/timg.gif',
-    });
+	
 
 
 

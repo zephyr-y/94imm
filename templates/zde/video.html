@@ -5,6 +5,9 @@
 {% block keywords %}{% for t in keyword %}{{ t.tag }},{% endfor %}{% endblock keywords %}
 {% block description %}{{ description }}{% endblock description %}
 <!-- header end -->
+{% block js_head %}
+<script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {window.location.href = "/mvideo";}else{/**/}</script>
+{% endblock js_head %}
 {% block focusbox %}
     <div class="focusbox">
         <div class="container"><h1 class="focusbox-title">小姐姐福利视频</h1>
@@ -49,22 +52,22 @@
 <!-- menu end-->
 <!-- section start-->
 {% block section %}
-    <article class="article-content">
-    <section id="main" class="container">
-    <div style="max-width: 30%; margin-top: 2%; position: relative;">
+
+    <div style="width: 30%;position: relative;top: 50%;left: 50%;transform: translate(-50%);">
         <video id="player" src="{{ url }}" webkit-playsinline playsinline loop autoplay="autoplay"
                style="height: auto; max-width: 100%;" poster="/static/v_back.jpg"></video>
-        <span style="position:absolute;top:5px;left:5px;color:#fff;">视频来源:[<span id="source"
+        <span style="position:absolute;top:15px;left:5px;color:#fff;">视频来源:[<span id="source"
                                                                                  style="color: #FF4040;">{{ source }}</span>]</span>
-        <span style="position:absolute;top:25px;left:5px;color:#fff;">用户ID:[<span
+        <span style="position:absolute;top:30px;left:5px;color:#fff;">用户ID:[<span
                 style="color: #4682B4; cursor: pointer;" id="check">{{ user_id }}</span>]</span>
         <input id="next" type="button"
                style=" display: block; width: 100px;height: 100px;position: absolute;bottom: 5px;right: 3px; background:url(/static/zde/next.png) no-repeat left top"/>
     </div>
-    </section>
+
 {% endblock section %}
 <!-- section end-->
 {% block js %}
+
     <script>
         (function (window, document) {
             var user_id ={{ user_id }};

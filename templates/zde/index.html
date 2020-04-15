@@ -40,9 +40,8 @@
             {% for imglist in data %}
                 <article class="excerpt excerpt-c5">
                     <div class="thumbnail">
-                        <div class="imgbox" style="background-image:url({{ imglist.firstimg }})" onclick="window.location.href= '{% url 'article' imglist.pid %}';return false">
-                            <a href="/type/{{ imglist.type_id }}"> {{ imglist.type }}</a>
-
+					<a href="/type/{{ imglist.type_id }}" class="imgbox-a"> {{ imglist.type }}</a>
+                        <div class="imgbox" style="background-image:url({{ imglist.firstimg }})" onclick="window.location.href= '{% url 'article' imglist.pid %}';return false">  
                     </div>
                     <h2><a href="{% url 'article' imglist.pid %}">{{ imglist.title }}</a></h2>
                     <footer>
@@ -56,6 +55,7 @@
             {% endfor %}
         </div>
     </div>
+<div class="pagination pagination-multi"> {% paginate %} </div>
 {% endblock section%}
 <!-- section end-->
 <!-- js start -->

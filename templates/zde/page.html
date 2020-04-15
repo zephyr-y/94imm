@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 <!-- header start -->
-{% block title %}{{ siteName }}{% endblock title %}
+{% block title %}{{ title }} - {{ siteName }}{% endblock title %}
 {% block keywords %}{% for t in tag %}{{ t.tname }},{% endfor %}{% endblock keywords %}
 {% block description %}"由{{ siteName }}为您整理的高清《{{ title }}》图集"{% endblock description %}
 <!-- header end -->
@@ -51,14 +51,15 @@
 <!-- menu end-->
 <!-- section start-->
 {% block section %}
-    <article class="article-content">
-        {% for img in data %}
-            <p><img class="alignnone size-medium wp-image-42" data-original="{{ img }}" alt="{{ title }}"
-                    style="width:800px;hight:auto"/>
-            <!--<p><img class="alignnone size-medium wp-image-42" src="{{ img }}" alt="{{ title }}" style="width:800px;hight:auto" />-->
-        {% endfor %}
-        </p>
-    </article>
+
+
+	<article class="article-content" id="img-box">
+	{% for img in data %}
+		<p><img class="alignnone size-medium wp-image-42" src="/static/zde/timg.gif" data-src="{{ img }}" alt="{{ title }}" style="width:800px;hight:auto" />
+		<!--<p><img class="alignnone size-medium wp-image-42" src="{{ img }}" alt="{{ title }}" style="width:800px;hight:auto" />-->
+		{% endfor %}
+	</p>
+	</article>
 {% endblock section %}
 <!-- section end-->
 {% block recommend %}
@@ -68,14 +69,12 @@
         {% for items in similar %}
             <article class="excerpt excerpt-c5">
                 <div class="thumbnail">
-                    {#                    <a class="thumbnail" href="{% url 'article' imglist.pid %}">#}
                     <div class="imgbox" style="background-image:url({{ items.firstimg }});">
 
                         <a href="/type/{{ items.type_id }}"> {{ items.type }}</a>
                         <div class="imgbox-click"
                              onclick="window.location.href= '{% url 'article' items.pid %}';return false"></div>
                     </div>
-                    {#                    </a>#}
                 </div>
                 <h2><a href="{% url 'article' items.pid %}">{{ items.stitle }}</a></h2>
                 <footer>
@@ -91,3 +90,61 @@
     </div>
 </div>
 {% endblock recommend %}
+
+{% block js %}
+<script>
+    var num = document.getElementsByTagName('img').length;
+    var img = document.getElementsByClassName("alignnone size-medium wp-image-42");
+    var n = 0; //存储图片加载到的位置，避免每次都从第一张图片开始遍历
+    lazyload(); //页面载入完毕加载可是区域内的图片
+    //window.onscroll = lazyload;
+    function lazyload() { //监听页面滚动事件
+        var seeHeight = document.documentElement.clientHeight; //可见区域高度
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop; //滚动条距离顶部高度
+        for (var i = n; i < num; i++) {
+		    if (typeof(img[i])=="undefined" || img[i]=='' || img[i]==null){
+			        break; 
+			}else{
+            if (img[i].offsetTop < seeHeight + scrollTop) {
+                if (img[i].getAttribute("src") == "/static/zde/timg.gif") {
+                    img[i].src = img[i].getAttribute("data-src");
+                }
+                n = i + 1;
+            }
+        }
+    }
+	}
+	
+	
+	
+// 简单的节流函数
+//fun 要执行的函数
+//delay 延迟
+//time  在time时间内必须执行一次
+function throttle(fun, delay, time) {
+    var timeout,
+        startTime = new Date();
+    return function() {
+        var context = this,
+            args = arguments,
+            curTime = new Date();
+        clearTimeout(timeout);
+        // 如果达到了规定的触发时间间隔，触发 handler
+        if (curTime - startTime >= time) {
+            fun.apply(context, args);
+            startTime = curTime;
+            // 没达到触发间隔，重新设定定时器
+        } else {
+            timeout = setTimeout(function(){
+	            fun.apply(context, args);
+            }, delay);
+        }
+    };
+};
+// 实际想绑定在 scroll 事件上的 handler
+//function lazyload(event) {}
+// 采用了节流函数
+window.addEventListener('scroll',throttle(lazyload,200,500));
+ 
+</script>
+{% endblock js %}
