@@ -72,7 +72,7 @@ def tag(request, tid):
                 sendtime = pid.sendtime
                 hot = pid.hot
                 imgs.append({"pid": id, "firstimg": firstimg, "title": title, "sendtime": sendtime, "hot": hot,
-                             "type": type_dict[type_id], "type_id": type_id})
+                             "type": typedict[type_id], "type_id": type_id})
         return render(request, 'index.html',
                       {"data": imgs, "typelist": typelist, "siteName": site_name, "keyWord": key_word,
                        "description": description, "siteUrl": site_url, "email": email,"friendly_link":friendly_link})
