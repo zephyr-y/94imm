@@ -111,7 +111,7 @@ if ! [ -x "$(command -v mysql)" ]; then
 	mysql -uroot -e "flush privileges;"
 else
     read -p "Create databases : " db_name
-	read -p "Create root password: " db_pass
+	read -p "Password for root: " db_pass
 	create_db_sql="create database IF NOT EXISTS ${db_name} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
 	create_user="update mysql.user set password=password('${db_pass}') where user='root';"
 	mysql -uroot -p$db_pass -e "${create_db_sql}"
@@ -214,7 +214,7 @@ allow_url=['$allow_url','127.0.0.1']
 cache_time=300
 templates="zde"
 site_name="$site_name"
-site_url = "$site_url/"
+site_url = "http://$site_url/"
 key_word = "妹子,美女,mm131,妹子图,性感,免费,图片,美女图,胸器"
 description = "$site_name分享高品质美女图片，快速无弹窗。可以长期收藏的美女图片站"
 email = "amdin@$site_name"
