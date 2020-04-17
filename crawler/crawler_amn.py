@@ -1,5 +1,6 @@
 # coding='UTF-8'
-
+import sys
+sys.path.append('../')
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 import threading,pymysql,time,requests,os,urllib3,re,random
@@ -176,7 +177,12 @@ class Spider():
 
 # start_page是采集开始也，end是采集结束页，type不用修改，自动分类，起始页为1
 if __name__ == "__main__":
-    cl_list=[{"start_page": 1,"end_page":17, "type": "Cosplay", "type_id":6}
+    cl_list=[{"start_page": 1,"end_page":17, "type": "Cosplay", "type_id":6},
+             {"start_page": 1,"end_page":17, "type": "性感", "type_id":1},
+             {"start_page": 1, "end_page": 17, "type": "丝袜", "type_id": 2},
+             {"start_page": 1, "end_page": 17, "type": "美腿", "type_id": 2},
+             {"start_page": 1, "end_page": 17, "type": "美胸", "type_id": 1},
+             {"start_page": 1, "end_page": 17, "type": "制服诱惑", "type_id": 2}
              ]
 
 

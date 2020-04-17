@@ -21,14 +21,13 @@
         <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor menu-item-has-children menu-item-17">
             <a>排行榜</a>
             <ul class="sub-menu">
-                {% ifequal  typeid "new" %}
+                {% ifequal  method "new" %}
                     <li class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item menu-item-28">
                         <a href="/sort/new">最新发布</a></li>
-                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18"
+                    <li>
                     <a href="/sort/hot">最受欢迎</a></li>
                 {% else %}
-                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18"><a
-                            href="/sort/new">最新发布</a></li>
+                    <li><a href="/sort/new">最新发布</a></li>
                     <li class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item menu-item-28">
                         <a href="/sort/hot">最受欢迎</a></li>
                 {% endifequal %}

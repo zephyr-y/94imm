@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import sys
+
+sys.path.append('../')
 from  PIL import Image as Img
 import os,threading,platform
 

@@ -20,7 +20,6 @@ from images import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^article/(?P<i_id>\d+)/$', views.page, name='article'),
-    url(r'^article_all/(?P<i_id>\d+)/$', views.page_all, name='article_all'),
     url(r'^tag/(?P<tid>\d+)/$', views.tag, name='tag'),
     url(r'^type/(?P<typeid>\d+)/$', views.type, name='type'),
     url(r'^search/', views.search),

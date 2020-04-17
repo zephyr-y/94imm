@@ -1,10 +1,8 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render
 from images.models import *
-from django.views.decorators.cache import cache_page
 import random, json
 from django.http import HttpResponse
-from config import site_name, site_url, key_word, description, email
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage, InvalidPage
+from config import site_name, site_url, key_word, description, email,friendly_link
 
 
 
@@ -54,64 +52,17 @@ def page(request, i_id):
         tags = random.sample(tags, 4)
     typename = typedict[typeid]
     return render(request, 'page.html',
-                  {"data": imgs, "tag": tags, "title": title, "type": pagetype, "typeid": typeid, "time": time,
+                  {"data": imgs, "tag": tags, "title": title, "type": pagetype, "typeid": str(typeid), "time": time,
                    "similar": page_similar(typeid), "typelist": typelist, "pageid": i_id, "siteName": site_name,
                    "keyWord": key_word, "description": description, "typeName": typename, "siteUrl": site_url,
-                   "email": email})
-
-
-
-def page_all(request, i_id):
-    try:
-        page_arr = Page.objects.get(id=i_id)
-        imgs = []
-        tags = []
-        typelist = []
-        page_hot = page_arr.hot
-        page_arr.hot = page_hot + 1
-        page_arr.save()
-        time = page_arr.sendtime
-        typeid = page_arr.typeid
-        pagetype = Type.objects.get(id=typeid).type
-        title = page_arr.title
-        taglist = page_arr.tagid
-        tag_arr = taglist.replace("[", "").replace("]", "").split(",")
-        type_list = Type.objects.all().order_by("id")
-        for type_arr in type_list:
-            type = type_arr.type
-            type_id = type_arr.id
-            typelist.append({"type": type, "type_id": type_id})
-        for t_id in tag_arr:
-            tagid = t_id.strip(" ")
-            tag = Tag.objects.get(id=tagid).tag
-            tags.append({"tname": tag, "tid": tagid})
-        imglist = Image.objects.filter(pageid=i_id)
-        for img_arr in imglist:
-            img = img_arr.imageurl
-            imgs.append(img)
-        if len(tags) > 4:
-            tags = random.sample(tags, 4)
-        print(page_similar(1))
-        return render(request, 'page_all.html',
-                      {"data": imgs, "tag": tags, "title": title, "type": pagetype, "typeid": typeid, "time": time,
-                       "similar": page_similar(1), "typelist": typelist, "pageid": i_id, "siteName": site_name,
-                       "keyWord": key_word, "description": description, "siteUrl": site_url, "email": email})
-    except:
-        return render(request, '404.html')
+                   "email": email,"friendly_link":friendly_link})
 
 
 def tag(request, tid):
     if request.method == "GET":
         imgs = []
-        typelist = []
         page_list = Page.objects.all().order_by("-id")
-        type_list = Type.objects.all().order_by("id")
-        type_dict = {}
-        for type_arr in type_list:
-            type = type_arr.type
-            type_id = type_arr.id
-            typelist.append({"type": type, "type_id": type_id})
-            type_dict.update({type_id: type})
+        typedict, typelist = type_list()
         for pid in page_list:
             if tid in pid.tagid:
                 id = pid.id
@@ -124,20 +75,13 @@ def tag(request, tid):
                              "type": type_dict[type_id], "type_id": type_id})
         return render(request, 'index.html',
                       {"data": imgs, "typelist": typelist, "siteName": site_name, "keyWord": key_word,
-                       "description": description, "siteUrl": site_url, "email": email})
+                       "description": description, "siteUrl": site_url, "email": email,"friendly_link":friendly_link})
 
 
 def type(request, typeid):
     if request.method == "GET":
         imgs = []
-        typelist = []
-        type_list = Type.objects.all().order_by("id")
-        type_dict = {}
-        for type_arr in type_list:
-            type = type_arr.type
-            type_id = type_arr.id
-            typelist.append({"type": type, "type_id": str(type_id)})
-            type_dict.update({type_id: type})
+        typedict, typelist = type_list()
         page_list = Page.objects.filter(typeid=typeid).order_by("-id")
         for pid in page_list:
             title = pid.title
@@ -147,10 +91,10 @@ def type(request, typeid):
             type_id = pid.typeid
             sendtime = pid.sendtime
             imgs.append({"pid": id, "firstimg": firstimg, "title": title, "sendtime": sendtime, "hot": hot,
-                         "type": type_dict[type_id], "type_id": type_id})
+                         "type": typedict[type_id], "type_id": type_id})
         return render(request, 'category.html',
                       {"data": imgs, "typelist": typelist, "typeid": str(typeid), "siteName": site_name,
-                       "keyWord": key_word, "description": description, "siteUrl": site_url, "email": email})
+                       "keyWord": key_word, "description": description, "siteUrl": site_url, "email": email,"friendly_link":friendly_link})
 
 
 def page_similar(id):
@@ -178,14 +122,7 @@ def page_similar(id):
 def search(request):
     if "s" in request.GET:
         imgs = []
-        typelist = []
-        type_list = Type.objects.all().order_by("id")
-        type_dict = {}
-        for type_arr in type_list:
-            type = type_arr.type
-            type_id = type_arr.id
-            typelist.append({"type": type, "type_id": str(type_id)})
-            type_dict.update({type_id: type})
+        typedict, typelist = type_list()
         context = request.GET['s']
         pagelist = Page.objects.filter(title__contains=context).order_by("-id")
         for pid in pagelist:
@@ -196,10 +133,10 @@ def search(request):
             type_id = pid.typeid
             sendtime = pid.sendtime
             imgs.append({"pid": id, "firstimg": firstimg, "title": title, "sendtime": sendtime, "hot": hot,
-                         "type": type_dict[type_id], "type_id": type_id})
+                         "type": typedict[type_id], "type_id": type_id})
         return render(request, 'index.html',
                       {"data": imgs, "typelist": typelist, "siteName": site_name, "keyWord": key_word,
-                       "description": description, "siteUrl": site_url, "email": email})
+                       "description": description, "siteUrl": site_url, "email": email,"friendly_link":friendly_link})
 
 
 def HotTag(request):
@@ -209,14 +146,7 @@ def HotTag(request):
     page_sql = Page.objects.all()
     page_dict = {}
     return_list = []
-    typelist = []
-    type_list = Type.objects.all().order_by("id")
-    type_dict = {}
-    for type_arr in type_list:
-        type = type_arr.type
-        type_id = type_arr.id
-        typelist.append({"type": type, "type_id": str(type_id)})
-        type_dict.update({type_id: type})
+    typedict, typelist = type_list()
     for alltag in tag_sql:
         tag_dict.update({str(alltag.id).strip(): alltag.tag})
     for page in page_sql:
@@ -242,7 +172,7 @@ def HotTag(request):
             )
     return render(request, 'tag.html',
                   {"data": return_list, "typelist": typelist, "keyword": return_list[0:10], "siteName": site_name,
-                   "keyWord": key_word, "description": description, "siteUrl": site_url, "email": email})
+                   "keyWord": key_word, "description": description, "siteUrl": site_url, "email": email,"friendly_link":friendly_link})
 
 
 def SortBy(request, method):
@@ -252,14 +182,7 @@ def SortBy(request, method):
         else:
             page_list = Page.objects.all().order_by("-hot")[:100]
         imgs = []
-        typelist = []
-        type_list = Type.objects.all().order_by("id")
-        type_dict = {}
-        for type_arr in type_list:
-            type = type_arr.type
-            type_id = type_arr.id
-            typelist.append({"type": type, "type_id": str(type_id)})
-            type_dict.update({type_id: type})
+        type_dict, typelist = type_list()
         for pid in page_list:
             title = pid.title
             firstimg = pid.firstimg
@@ -272,7 +195,7 @@ def SortBy(request, method):
 
         return render(request, 'sort.html',
                       {"data": imgs, "typelist": typelist, "method": method, "siteName": site_name, "keyWord": key_word,
-                       "description": description, "siteUrl": site_url, "email": email})
+                       "description": description, "siteUrl": site_url, "email": email,"friendly_link":friendly_link})
 
 
 def getVideo(request):
@@ -309,7 +232,7 @@ def mVideo(request):
             "date_time": video_info.date_time,
             "v_name": video_info.v_name,
             "source": video_info.source, "siteName": site_name, "keyWord": key_word, "description": description,
-            "siteUrl": site_url, "email": email})
+            "siteUrl": site_url, "email": email,"friendly_link":friendly_link})
 
 
 def pVideo(request):
@@ -332,7 +255,7 @@ def pVideo(request):
             "v_name": video_info.v_name,
             "source": video_info.source,
             "typelist": typelist, "siteName": site_name, "keyWord": key_word, "description": description,
-            "siteUrl": site_url, "email": email})
+            "siteUrl": site_url, "email": email,"friendly_link":friendly_link})
 
 
 def type_list():

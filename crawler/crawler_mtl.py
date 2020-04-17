@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+import sys
+
+sys.path.append('../')
 from bs4 import BeautifulSoup
 import threading,pymysql,time,requests,os,urllib3
 from config import mysql_config

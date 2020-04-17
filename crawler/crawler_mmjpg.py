@@ -1,5 +1,8 @@
 #coding='UTF-8'
 
+import sys
+
+sys.path.append('../')
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
 import threading,pymysql,time,requests,os,urllib3,re,random
