@@ -215,11 +215,13 @@ cache_time=300
 templates="zde"
 site_name="$site_name"
 site_url = "http://$site_url/"
-key_word = "妹子,美女,mm131,妹子图,性感,免费,图片,美女图,胸器"
-description = "$site_name分享高品质美女图片，快速无弹窗。可以长期收藏的美女图片站"
+key_word = "关键词1,关键词2,关键词3"
+description = "这是一个高质量的自动爬虫"
 email = "amdin@$site_name"
 EOF
 cd $path
+rm -f /usr/local/lib/python3.6/site-packages/dj_pagination/templates/pagination/pagination.html
+cp templates/zde/pagination.html /usr/local/lib/python3.6/site-packages/dj_pagination/templates/pagination
 pip3 install -r requirements.txt
 uwsgi --ini uwsgi.ini
 rm -rf ../tmp
