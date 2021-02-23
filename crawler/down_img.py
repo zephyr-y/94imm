@@ -1,3 +1,6 @@
+import sys
+
+sys.path.append('../')
 import threading, pymysql,os,requests
 from config import mysql_config
 
@@ -13,13 +16,6 @@ dbhost = {
     "user": mysql_config['USER'],
     "password": mysql_config['PASSWORD']
 }
-# dbhost={
-#         "host":"192.168.1.67",
-#         "dbname":"silumz",
-#         "user":"silumz",
-#         "password":"fendou2009"
-#     }
-
 db = pymysql.connect(dbhost.get("host"), dbhost.get("user"), dbhost.get("password"), dbhost.get("dbname"))
 cursor = db.cursor()
 

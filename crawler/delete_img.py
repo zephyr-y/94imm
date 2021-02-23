@@ -1,3 +1,6 @@
+import sys
+
+sys.path.append('../')
 import pymysql,os
 from config import mysql_config
 

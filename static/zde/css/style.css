@@ -4194,6 +4194,19 @@ body {
 	background-color: #FFF
 }
 
+.footer p{
+	margin: 0 0.5em;
+}
+
+.footer ul{
+	margin: 0 0.89em 0.5em;
+}
+
+.footer ul li{
+	display: inline;
+    margin-right: 0.5em
+}
+
 .footer a {
 	color: #bbb
 }

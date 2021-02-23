@@ -14,7 +14,7 @@
     <script type='text/javascript' src="/static/zde/js/jquery.js"></script>
 	<script type='text/javascript' src="/static/zde/js/main.js"></script>
     <meta name="keywords" content="{% block keywords %}{% endblock keywords %} ">
-    <meta name="description" content="{% block description %}{% endblock description %}">
+    <meta name="description" content="{% block description %}{% endblock description %} ">
     <style type="text/css">.recentcomments a {
         display: inline !important;
         padding: 0 !important;
@@ -46,12 +46,18 @@
 <section class="container">{% block section %}{% endblock section %}</section>
 {% block recommend %}{% endblock recommend %}
 <footer class="footer">
-	    &copy; 2020 <a href="/">{{ siteName }}</a><br />
+	    <p>&copy; 2020 <a href="/">{{ siteName }}</a></p>
 		<h1>美图分享,每日更新.</h1>
-		POWERED BY <a href="https://github.com/Turnright-git/94imm.git">94iMM</a> | 本站数据来自网络，如侵害您的权利请联系本站删除相关信息，邮箱：{{ email }}
+		<ul>友情链接：
+		{% for links in friendly_link %}
+		    <li><a href="{{ links.link }}">{{ links.name }}</a></li>
+			{% endfor %}
+		</ul>
+		<p>POWERED BY <a href="https://github.com/Turnright-git/94imm.git">94iMM</a> | 本站数据来自网络，如侵害您的权利请联系本站删除相关信息，邮箱：{{ email }}</p>
 </footer>
 
 {% block js %}{% endblock js %}
-<!--添加统计代码-->
+<!-- 统计代码 -->
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 <!-- header start -->
 {% block title %}{{ title }} - {{ siteName }}{% endblock title %}
 {% block keywords %}{% for t in tag %}{{ t.tname }},{% endfor %}{% endblock keywords %}
-{% block description %}"由{{ siteName }}为您整理的高清《{{ title }}》图集"{% endblock description %}
+{% block description %}由{{ siteName }}为您整理的高清《{{ title }}》图集{% endblock description %}
 <!-- header end -->
 {% block focusbox %}
 <div class="focusbox">
@@ -27,7 +27,7 @@
             <a>妹子图</a>
             <ul class="sub-menu">
                 {% for types in typelist %}
-                    {% ifequal  typeid types.type_id %}
+                    {% ifequal typeid types.type_id %}
                         <li class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item menu-item-28">
                             <a href="{% url 'type' types.type_id %} ">{{ types.type }}</a></li>
                     {% else %}
@@ -69,11 +69,8 @@
         {% for items in similar %}
             <article class="excerpt excerpt-c5">
                 <div class="thumbnail">
-                    <div class="imgbox" style="background-image:url({{ items.firstimg }});">
-
-                        <a href="/type/{{ items.type_id }}"> {{ items.type }}</a>
-                        <div class="imgbox-click"
-                             onclick="window.location.href= '{% url 'article' items.pid %}';return false"></div>
+				<a href="/type/{{ items.type_id }}" class="imgbox-a"> {{ items.type }}</a>
+                    <div class="imgbox" style="background-image:url({{ items.firstimg }})" onclick="window.location.href= '{% url 'article' items.pid %}';return false">  
                     </div>
                 </div>
                 <h2><a href="{% url 'article' items.pid %}">{{ items.stitle }}</a></h2>

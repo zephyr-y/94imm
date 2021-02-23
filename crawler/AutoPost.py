@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import sys
+
+sys.path.append('../')
 import pymysql,time,os,random,shutil,platform
 from config import mysql_config
 
